@@ -47,4 +47,29 @@ Hàm Insert_By_Time(List, NewFile):
         curr = curr.next
     
     newNode.next = curr.next
-    curr.next = newNode
+    curr.next = newNodeHàm Backup_To_USB(List):
+    DUNG_LUONG_USB = 32 * 1024 * 1024 * 1024  // 32GB quy đổi ra Byte
+    
+    Trong khi Calculate_Total_Size(List) > DUNG_LUONG_USB:
+        Nếu List.head == NULL: Thoát vòng lặp
+        
+        minNode = List.head
+        minPrev = NULL
+        curr = List.head
+        prev = NULL
+        
+        // Bước 1: Tìm Node có size nhỏ nhất trong toàn danh sách
+        Trong khi curr != NULL:
+            Nếu curr.data.size < minNode.data.size:
+                minNode = curr
+                minPrev = prev
+            prev = curr
+            curr = curr.next
+            
+        // Bước 2: Thực hiện xóa 'minNode'
+        Nếu minPrev == NULL: // minNode nằm ở đầu danh sách
+            List.head = List.head.next
+        Nếu không: // 'Bắc cầu' qua node cần xóa
+            minPrev.next = minNode.next
+            
+        Giải phóng bộ nhớ(minNode)
